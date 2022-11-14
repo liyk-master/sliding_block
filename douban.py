@@ -3,7 +3,6 @@ from pyppeteer import launch
 import requests
 import cv2 as cv
 import test as ts
-import json
 
 width, height = 1366, 768
 
@@ -55,12 +54,11 @@ async def main():
         downLoadImg(uri, 'douban.png')
         img0 = cv.imread('./img/douban.png')
         distance = ts.get_pos(img0)
-        if distance == 0:   # 等于零计算失败 刷新验证码重新执行
+        if distance == 0:  # 等于零计算失败 刷新验证码重新执行
             await frame[1].click('#reload')
             await frame[1].waitFor(3000)
             print('计算失败，重新计算！！')
             continue
-
 
         el = await frame[1].J('.tc-fg-item')
         box = await el.boundingBox()
@@ -71,7 +69,8 @@ async def main():
         # await page.waitFor(2000)
         step += 1
         # 判断是否滑块成功
-        finalResponse = await page.waitForResponse(lambda res: res.url == 'https://t.captcha.qq.com/cap_union_new_verify' and res.status == 200)
+        finalResponse = await page.waitForResponse(
+            lambda res: res.url == 'https://t.captcha.qq.com/cap_union_new_verify' and res.status == 200)
         result = await finalResponse.json()
         # print(type(result))
         # print(result['errorCode'])
