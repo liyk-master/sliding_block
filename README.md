@@ -11,13 +11,8 @@
 
 1.  git clone https://gitee.com/liyuanke/sliding_block.git
 2.  安装代码中的库
-3.  python douban.py
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
+3.  douban.py   豆瓣滑块破解  执行 python douban.py
+3.  toutiao.py  今日头条定时拉取推送QQ  cron规则 0 8 * * * your_dir/sliding_block/toutiao.py
 
 #### 参与贡献
 
