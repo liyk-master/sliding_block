@@ -9,6 +9,7 @@ width, height = 1366, 768
 async def main():
     p = Path("./userdata")  # 参数为你的用户数据文件夹的相对路径
     browser = await launch(headless=True,
+                           args=['--no-sandbox'],
                            userDataDir=p.resolve())
     page = await browser.newPage()
     await page.setViewport({'width': width, 'height': height})
