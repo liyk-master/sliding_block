@@ -2,13 +2,13 @@ import asyncio
 import requests
 from pyppeteer import launch
 
-
 async def main():
     browser = await launch(args=['--no-sandbox'])
     page = await browser.newPage()
     await page.goto('https://www.toutiao.com')
+    await page.waitFor(3000)   # 解决 Execution context was destroyed, most likely because of a navigation
     await page.evaluate('''() =>{ Object.defineProperties(navigator,{ webdriver:{ get: () => false } }) }''')
-    await page.waitFor(2000)  # 等待页面加载完毕
+    await page.waitFor(1000)
     # 拉取默认的数量
     res = await page.querySelectorAll('.feed-card-article-l')
     # print(res)
