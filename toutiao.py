@@ -1,21 +1,15 @@
 import asyncio
 import requests
 from pyppeteer import launch
-from pathlib import Path
-
-width, height = 1366, 768
 
 
 async def main():
-    p = Path("./userdata")  # 参数为你的用户数据文件夹的相对路径
-    browser = await launch(headless=True,
-                           args=['--no-sandbox'],
-                           userDataDir=p.resolve())
+    browser = await launch(args=['--no-sandbox'])
     page = await browser.newPage()
-    await page.setViewport({'width': width, 'height': height})
     await page.goto('https://www.toutiao.com')
     await page.evaluate('''() =>{ Object.defineProperties(navigator,{ webdriver:{ get: () => false } }) }''')
-    # 拉去默认的数量
+    await page.waitFor(2000)  # 等待页面加载完毕
+    # 拉取默认的数量
     res = await page.querySelectorAll('.feed-card-article-l')
     # print(res)
     for i in range(len(res)):
@@ -35,7 +29,7 @@ async def main():
             "user_id": '2874459391',
             "message": str(a_value) + '\n' + str(a_href),
         }
-        response = requests.post(url='http://192.168.1.147:5700/send_private_msg', data=data).json()
+        response = requests.post(url='http://domain/send_private_msg', data=data).json()   # 发送到QQ
         print(response)
 
     # await asyncio.sleep(100)
